@@ -1,5 +1,6 @@
 import { Canvas } from '@react-three/fiber'
 import FirefliesSystem from './FirefliesSystem'
+import OriOrb from './OriOrb'
 import PostFX from './PostFX'
 import useForestStore from '../../store/useForestStore'
 
@@ -15,6 +16,7 @@ export default function ForestCanvas() {
     >
       <ambientLight intensity={0.05} />
       <FirefliesSystem zone={activeZone} />
+      <OriOrb />
       <PostFX />
     </Canvas>
   )
