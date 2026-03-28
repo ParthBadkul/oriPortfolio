@@ -1,1 +1,48 @@
-/* Global styles — placeholder, Task 2 will populate this */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+@import './forest.css';
+
+:root {
+  /* Background */
+  --bg-deep: #030304;
+  --bg-shadow: #08090c;
+
+  /* Foliage */
+  --foliage-cool: #1e5c35;
+  --foliage-bright: #4ecb71;
+  --foliage-yellow: #8bc34a;
+  --foliage-purple: #4a2070;
+  --foliage-orange: #cc5500;
+  --foliage-rust: #9b3a1a;
+  --foliage-teal: #006666;
+
+  /* Lights */
+  --light-amber: #e8940a;
+  --light-canopy: #f5c030;
+  --light-spirit: #7fffff;
+  --light-firefly: #c8ff6a;
+
+  /* Zone atmospheres */
+  --zone-hero-glow: rgba(232, 148, 10, 0.15);
+  --zone-projects-glow: rgba(74, 32, 112, 0.25);
+  --zone-experience-glow: rgba(245, 192, 48, 0.20);
+
+  /* Typography */
+  --font-display: 'Cinzel', serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* UI */
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(78, 203, 113, 0.3);
+  --glass-blur: 12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg-deep);
+  color: #e8ffe0;
+  font-family: var(--font-body);
+  cursor: none;
+}
