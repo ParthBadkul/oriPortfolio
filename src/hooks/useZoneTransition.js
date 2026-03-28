@@ -7,7 +7,6 @@ export default function useZoneTransition(worldRef, overlayRef) {
   const transitionPhase = useForestStore((s) => s.transitionPhase)
   const targetZone      = useForestStore((s) => s.targetZone)
   const activeZone      = useForestStore((s) => s.activeZone)
-  const setTransitionPhase = useForestStore((s) => s.setTransitionPhase)
   const setOriX            = useForestStore((s) => s.setOriX)
   const setOriState        = useForestStore((s) => s.setOriState)
   const completeTransition = useForestStore((s) => s.completeTransition)
@@ -17,8 +16,9 @@ export default function useZoneTransition(worldRef, overlayRef) {
     if (!targetZone) return
     if (!worldRef?.current || !overlayRef?.current) return
 
-    setTransitionPhase('entering-cave')
-    setOriState('enter-cave')
+    // Capture current values — they'll change during animation
+    const capturedTarget = targetZone
+    const capturedActive = activeZone
 
     const tl = gsap.timeline()
 
@@ -28,20 +28,16 @@ export default function useZoneTransition(worldRef, overlayRef) {
       duration: 0.5,
       delay: 0.4,
       ease: 'power2.in',
-      onStart: () => setTransitionPhase('dark'),
     })
 
-    // While dark: snap world to target zone position
+    // While dark: snap world to target zone position + position Ori at edge
     tl.call(() => {
-      const targetIndex = ZONE_INDEX[targetZone]
-      gsap.set(worldRef.current, { x: -(targetIndex * window.innerWidth) })
+      gsap.set(worldRef.current, { x: -(ZONE_INDEX[capturedTarget] * window.innerWidth) })
 
-      // Ori emerges from opposite edge
-      const isGoingRight = ZONE_INDEX[targetZone] > ZONE_INDEX[activeZone]
+      const isGoingRight = ZONE_INDEX[capturedTarget] > ZONE_INDEX[capturedActive]
       const emergeX = isGoingRight ? -window.innerWidth * 0.45 : window.innerWidth * 0.45
       setOriX(emergeX)
       setOriState('emerge')
-      setTransitionPhase('emerging')
     })
 
     // Fade back in
@@ -54,8 +50,7 @@ export default function useZoneTransition(worldRef, overlayRef) {
 
     // Animate Ori walking to center
     tl.call(() => {
-      const currentOriX = useForestStore.getState().oriX
-      const proxy = { x: currentOriX }
+      const proxy = { x: useForestStore.getState().oriX }
       gsap.to(proxy, {
         x: 0,
         duration: 1.2,
@@ -69,7 +64,5 @@ export default function useZoneTransition(worldRef, overlayRef) {
         },
       })
     })
-
-    return () => tl.kill()
   }, [transitionPhase])
 }

@@ -61,13 +61,13 @@ export default function ForestBackground({ zone }) {
         <svg viewBox="0 0 1440 600" preserveAspectRatio="xMidYMax slice" style={{ width: '110%', height: '100%', marginLeft: '-5%' }}>
           {[80,180,300,450,600,750,880,1020,1150,1280,1380].map((x, i) => (
             <ellipse key={i} cx={x} cy={580 - (i % 3) * 30} rx={30 + (i%4)*10} ry={120 + (i%3)*40}
-              fill={zone === 'projects' ? '#0d0a1e' : zone === 'experience' ? '#1a0c04' : '#0a1208'}
-              opacity={0.9} />
+              fill={zone === 'projects' ? '#1a0f30' : zone === 'experience' ? '#2a1808' : '#152b1e'}
+              opacity={0.95} />
           ))}
           {[120,260,420,580,720,900,1060,1220,1360].map((x, i) => (
             <rect key={`t${i}`} x={x-8} y={400-(i%4)*20} width={16} height={200}
-              fill={zone === 'projects' ? '#0d0a1e' : zone === 'experience' ? '#1a0c04' : '#0a1208'}
-              opacity={0.85} rx={6} />
+              fill={zone === 'projects' ? '#1a0f30' : zone === 'experience' ? '#2a1808' : '#152b1e'}
+              opacity={0.9} rx={6} />
           ))}
         </svg>
       </div>
@@ -87,12 +87,12 @@ export default function ForestBackground({ zone }) {
               strokeWidth={3+(i%3)} fill="none" opacity={0.6} />
           ))}
           <defs>
-            <radialGradient id="glow1">
+            <radialGradient id={`glow1-${zone}`}>
               <stop offset="0%" stopColor={zone==='projects'?'#7fffff':'#e8940a'} stopOpacity="0.3"/>
               <stop offset="100%" stopOpacity="0"/>
             </radialGradient>
           </defs>
-          <ellipse cx={zone==='projects'?350:800} cy={300} rx={200} ry={150} fill="url(#glow1)" />
+          <ellipse cx={zone==='projects'?350:800} cy={300} rx={200} ry={150} fill={`url(#glow1-${zone})`} />
         </svg>
       </div>
 
@@ -128,12 +128,12 @@ export default function ForestBackground({ zone }) {
       <div ref={setRef(4)} className="parallax-layer layer-ground" style={{ bottom: 0, top: 'auto', height: '35%' }}>
         <svg viewBox="0 0 1440 280" preserveAspectRatio="xMidYMax slice" style={{ width: '125%', height: '100%', marginLeft: '-12.5%' }}>
           <defs>
-            <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id={`ground-${zone}`} x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor={zone==='projects'?'#0d1020':zone==='experience'?'#120800':'#030a06'} stopOpacity="0"/>
               <stop offset="100%" stopColor={zone==='projects'?'#0d1020':zone==='experience'?'#120800':'#030a06'} stopOpacity="1"/>
             </linearGradient>
           </defs>
-          <rect width="1440" height="280" fill="url(#ground)" />
+          <rect width="1440" height="280" fill={`url(#ground-${zone})`} />
           {[0,140,300,480,660,840,1020,1180,1340,1440].map((x, i) => (
             <path key={i}
               d={`M${x},280 Q${x+30},${220-(i%4)*20} ${x+20},${180-(i%3)*15} Q${x+35},${200-(i%4)*10} ${x+60},280`}
